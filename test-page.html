@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Backend Ping</title>
+</head>
+<body>
+    <button id="ping-btn" type="button">Ping Backend</button>
+    <pre id="response"></pre>
+
+    <script>
+        const responseEl = document.getElementById("response");
+        const pingBtn = document.getElementById("ping-btn");
+
+        pingBtn.addEventListener("click", async () => {
+            responseEl.textContent = "Fetching...";
+
+            try {
+                const response = await fetch("http://localhost:5050/");
+                const data = await response.json();
+                responseEl.textContent = JSON.stringify(data, null, 2);
+            } catch (error) {
+                const message = error instanceof Error ? error.message : "Unknown error";
+                responseEl.textContent = `Error: ${message}`;
+            }
+        });
+    </script>
+</body>
+</html>
