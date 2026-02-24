@@ -24,8 +24,26 @@ export class UnauthorizedError extends HttpError {
   }
 }
 
+export class ForbiddenError extends HttpError {
+  constructor(message: string = 'Forbidden') {
+    super(message, 403);
+  }
+}
+
 export class ConflictError extends HttpError {
   constructor(message: string = 'Conflict') {
     super(message, 409);
+  }
+}
+
+export class NotFoundError extends HttpError {
+  constructor(message: string = 'Not Found') {
+    super(message, 404);
+  }
+}
+
+export class TooManyRequestsError extends HttpError {
+  constructor(message: string = 'Too Many Requests') {
+    super(message, 429);
   }
 }

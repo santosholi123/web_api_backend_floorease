@@ -1,9 +1,14 @@
 import 'dotenv/config';
 import express, { Application, Request, Response, NextFunction } from 'express';
+import path from 'path';
 import cors from 'cors';
+import cookieParser from 'cookie-parser';
 import { config } from './config';
 import { connectDatabase } from './database/mongodb';
 import authRoutes from './routes/auth.route';
+import bookingRoutes from './routes/booking.route';
+import adminRoutes from './routes/admin.route';
+import adminUsersRoute from './routes/admin.users.route';
 import { HttpError } from './errors/http-error';
 
 const app: Application = express();
@@ -12,20 +17,25 @@ const app: Application = express();
 // CORS configuration for Next.js frontend
 app.use(
   cors({
-    origin: ['http://localhost:3000', 'http://localhost:3001'],
+    origin: 'http://localhost:3000',
+    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'],
-    credentials: true,
   })
 );
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
 
 // Routes
 app.use(`${config.apiPrefix}/auth`, authRoutes);
+app.use(`${config.apiPrefix}/bookings`, bookingRoutes);
+app.use(`${config.apiPrefix}/admin`, adminRoutes);
+app.use(`${config.apiPrefix}/admin/users`, adminUsersRoute);
 
 // Root endpoint
-app.get("/", (req: Request, res: Response) => {
+app.get("/", (_req: Request, res: Response) => {
   res.status(200).json({ success: true, message: "Backend is running ✅" });
 });
 
