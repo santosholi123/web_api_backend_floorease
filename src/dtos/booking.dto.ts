@@ -42,4 +42,3 @@ export interface UpdateBookingDto {
   roomPhoto?: string;
   status?: BookingStatus;
 }
-//
