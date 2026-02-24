@@ -20,3 +20,4 @@ router.put('/:id', (req, res, next) => adminUsersController.updateUser(req, res,
 router.delete('/:id', (req, res, next) => adminUsersController.deleteUser(req, res, next));
 
 export default router;
+//
