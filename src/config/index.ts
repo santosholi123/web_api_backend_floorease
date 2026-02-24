@@ -11,4 +11,3 @@ export const config = {
     expiresIn: (process.env.JWT_EXPIRES_IN || '7d') as string,
   },
 };
-//
